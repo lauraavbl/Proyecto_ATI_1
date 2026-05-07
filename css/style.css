@@ -162,24 +162,35 @@ footer {
 
 .main-content {
     display: flex;
+    flex-direction: row;
     padding: 10px;
     box-shadow: 5px 5px 10px black;
+    gap: 20px;
 }
 
 .content-img {
+    flex-shrink: 0;
     padding-right: 10px;
     background-color: var(--main-color);
 }
 
 .content-info {
+    flex: 1;
     margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.img {
-    width: 300px;
+.img-profile {
+    width: 100%;
+    max-width: 300px;
     height: 100%;
+    object-fit: cover;
     border-bottom-right-radius: 25%;
 }
+
+
 
 .Nombre {
     color: var(--main-color);
@@ -219,4 +230,62 @@ td:nth-child(5) {
 }
 .icono{
     width:30px;
+}
+.menu-icon {
+    display: none;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+}
+@media (max-width: 480px) {
+    .nav-search { display: none; }
+    .user-icon { display: none; }
+    .menu-icon { display: block; }
+    .main-content { flex-direction: column; }
+    .img { width: 100%; max-width: 100%; }
+    .student-grid { grid-template-columns: repeat(2, 1fr); }
+    .img-index{content: url(../HTML/27279497Small.jpg);}
+    .img-profile{content: url(../HTML/27279497Small.jpg);}
+    .content-img {
+        width: 100%;
+        padding-right: 0;
+    }
+    .img-profile {
+        width: 100%;
+        max-width: 100%;
+        display: block;
+    }
+}
+
+/* Tablets: 481px - 768px */
+@media (min-width: 481px) and (max-width: 768px) {
+    .nav-search { display: none; }
+    .user-icon { display: none; }
+    .menu-icon { display: block; }
+    .main-content { flex-direction: column; }
+    .img { width: 100%; max-width: 100%; }
+    .student-grid { grid-template-columns: repeat(2, 1fr); }
+    .img-index{content: url(../HTML/27279497Small.jpg);}
+    .img-profile{content: url(../HTML/27279497Small.jpg);}
+    .content-img {
+        width: 100%;
+        padding-right: 0;
+    }
+    .img-profile {
+        width: 100%;
+        max-width: 100%;
+        display: block;
+    }
+}
+
+/* Laptops: 769px - 1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .menu-icon { display: none; }
+    .student-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Desktop: 1025px - 1200px */
+@media (min-width: 1025px) and (max-width: 1200px) {
+    .menu-icon { display: none; }
+    .student-grid { grid-template-columns: repeat(3, 220px); }
 }
