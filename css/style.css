@@ -246,6 +246,15 @@ td:nth-child(5) {
     .student-grid { grid-template-columns: repeat(2, 1fr); }
     .img-index{content: url(../HTML/27279497Small.jpg);}
     .img-profile{content: url(../HTML/27279497Small.jpg);}
+    .content-img {
+        width: 100%;
+        padding-right: 0;
+    }
+    .img-profile {
+        width: 100%;
+        max-width: 100%;
+        display: block;
+    }
 }
 
 /* Tablets: 481px - 768px */
@@ -258,6 +267,15 @@ td:nth-child(5) {
     .student-grid { grid-template-columns: repeat(2, 1fr); }
     .img-index{content: url(../HTML/27279497Small.jpg);}
     .img-profile{content: url(../HTML/27279497Small.jpg);}
+    .content-img {
+        width: 100%;
+        padding-right: 0;
+    }
+    .img-profile {
+        width: 100%;
+        max-width: 100%;
+        display: block;
+    }
 }
 
 /* Laptops: 769px - 1024px */
