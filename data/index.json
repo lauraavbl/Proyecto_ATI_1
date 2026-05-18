@@ -1,0 +1,12 @@
+const profiles = [
+    {
+        "ci": "27279497",
+        "image_ext": ".jpg",
+        "name": "Laura Barreto"
+    },
+    {
+        "ci": "14444733",
+        "image_ext": ".jpg",
+        "name": "Mar\u00eda Paula Herrero"
+    }
+]
