@@ -24,6 +24,28 @@ function initConfig() {
         icono.alt = config.profile;
     }
 
+    const profileText = document.querySelector(".profile-text");
+    if (profileText && typeof config !== "undefined") {
+        profileText.textContent = config.profile;
+    }
+
+    const profileLink = document.querySelector(".profile-link");
+    if (profileLink) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const lang = urlParams.get("lang");
+        let profileHref = "profile.html";
+        let ci = urlParams.get("ci");
+        if (ci) {
+            profileHref += `?ci=${ci}`;
+            if (lang) {
+                profileHref += `&lang=${lang}`;
+            }
+        } else if (lang) {
+            profileHref += `?lang=${lang}`;
+        }
+        profileLink.href = profileHref;
+    }
+
     const footerText = document.querySelector(".footer");
     if (footerText && typeof config !== "undefined") {
         footerText.textContent = config.copyRight;
@@ -176,6 +198,14 @@ window.addEventListener("DOMContentLoaded", () => {
             initProfile();
         };
         document.head.appendChild(profileScript);
+
+        const menuIcon = document.querySelector(".menu-icon");
+        const header = document.querySelector("header");
+        if (menuIcon && header) {
+            menuIcon.addEventListener("click", () => {
+                header.classList.toggle("menu-open");
+            });
+        }
     };
     document.head.appendChild(configScript);
 });

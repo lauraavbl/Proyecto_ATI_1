@@ -19,6 +19,22 @@ function initConfig() {
         icono.alt = config.profile;
     }
 
+    const profileText = document.querySelector(".profile-text");
+    if (profileText && typeof config !== "undefined") {
+        profileText.textContent = config.profile;
+    }
+
+    const profileLink = document.querySelector(".profile-link");
+    if (profileLink) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const lang = urlParams.get("lang");
+        let profileHref = "profile.html";
+        if (lang) {
+            profileHref += `?lang=${lang}`;
+        }
+        profileLink.href = profileHref;
+    }
+
     const semestre = document.querySelector(".semestre");
     if (semestre && typeof config !== "undefined") {
         semestre.textContent = config.semester;
@@ -148,6 +164,14 @@ window.addEventListener("DOMContentLoaded", () => {
             searchButton.addEventListener("click", () => {
                 const query = searchInput.value.trim();
                 renderProfiles(query);
+            });
+        }
+
+        const menuIcon = document.querySelector(".menu-icon");
+        const header = document.querySelector("header");
+        if (menuIcon && header) {
+            menuIcon.addEventListener("click", () => {
+                header.classList.toggle("menu-open");
             });
         }
     };
