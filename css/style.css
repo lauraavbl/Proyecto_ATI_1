@@ -76,6 +76,27 @@ header {
     color: var(--main-color, #1565C0);
 }
 
+.logo-menu-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.profile-text {
+    display: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: var(--flex-font);
+}
+
 section {
     padding: 28px 32px;
     border-top: 2px solid #ccc;
@@ -239,13 +260,11 @@ td:nth-child(5) {
 }
 @media (max-width: 480px) {
     .nav-search { display: none; }
-    .user-icon { display: none; }
+    .profile-link { display: none; }
     .menu-icon { display: block; }
     .main-content { flex-direction: column; }
     .img { width: 100%; max-width: 100%; }
     .student-grid { grid-template-columns: repeat(2, 1fr); }
-    .img-index{content: url(../HTML/27279497Small.jpg);}
-    .img-profile{content: url(../HTML/27279497Small.jpg);}
     .content-img {
         width: 100%;
         padding-right: 0;
@@ -260,13 +279,11 @@ td:nth-child(5) {
 /* Tablets: 481px - 768px */
 @media (min-width: 481px) and (max-width: 768px) {
     .nav-search { display: none; }
-    .user-icon { display: none; }
+    .profile-link { display: none; }
     .menu-icon { display: block; }
     .main-content { flex-direction: column; }
     .img { width: 100%; max-width: 100%; }
     .student-grid { grid-template-columns: repeat(2, 1fr); }
-    .img-index{content: url(../HTML/27279497Small.jpg);}
-    .img-profile{content: url(../HTML/27279497Small.jpg);}
     .content-img {
         width: 100%;
         padding-right: 0;
@@ -274,6 +291,52 @@ td:nth-child(5) {
     .img-profile {
         width: 100%;
         max-width: 100%;
+        display: block;
+    }
+}
+
+/* Mobile responsive expanded header menu */
+@media (max-width: 768px) {
+    header {
+        transition: padding 0.3s ease, gap 0.3s ease;
+    }
+
+    .logo-menu-row {
+        width: 100%;
+    }
+
+    header.menu-open {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding-bottom: 16px;
+    }
+
+    header.menu-open .logo-menu-row {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 12px;
+    }
+
+    header.menu-open .nav-search {
+        display: flex;
+        width: 100%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 12px;
+    }
+
+    header.menu-open .nav-search input[type="text"] {
+        flex: 1;
+        width: auto;
+    }
+
+    header.menu-open .profile-link {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+    }
+
+    header.menu-open .profile-text {
         display: block;
     }
 }
