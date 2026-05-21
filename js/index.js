@@ -30,7 +30,7 @@ function initConfig() {
     }
 }
 
-function renderProfiles() {
+function renderProfiles(filterQuery = "") {
     const grid = document.querySelector(".student-grid");
     if (!grid || typeof profiles === "undefined") return;
 
@@ -39,7 +39,28 @@ function renderProfiles() {
     const urlParams = new URLSearchParams(window.location.search);
     const lang = urlParams.get("lang");
 
-    profiles.forEach(profile => {
+    const filteredProfiles = profiles.filter(profile => 
+        profile.name.toLowerCase().includes(filterQuery.toLowerCase())
+    );
+
+    if (filteredProfiles.length === 0) {
+        const noResultsDiv = document.createElement("div");
+        noResultsDiv.className = "no-results";
+        noResultsDiv.style.gridColumn = "1 / -1";
+        noResultsDiv.style.textAlign = "center";
+        noResultsDiv.style.color = "#1c4975";
+        noResultsDiv.style.fontFamily = "var(--flex-font)";
+        noResultsDiv.style.fontSize = "16px";
+        noResultsDiv.style.fontWeight = "normal";
+        noResultsDiv.style.marginTop = "30px";
+
+        const msg = config.noResults ? config.noResults.replace("[query]", `<strong>${filterQuery}</strong>`) : `No hay perfiles que tengan en su nombre: <strong>${filterQuery}</strong>`;
+        noResultsDiv.innerHTML = msg;
+        grid.appendChild(noResultsDiv);
+        return;
+    }
+
+    filteredProfiles.forEach(profile => {
         const card = document.createElement("a");
         card.className = "student-card";
 
@@ -85,6 +106,7 @@ function renderProfiles() {
 window.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
     const lang = urlParams.get("lang") || "es";
+    const initialSearch = urlParams.get("search") || "";
 
     let configSrc = "conf/configES.json";
     const normalizedLang = lang.toLowerCase();
@@ -100,7 +122,34 @@ window.addEventListener("DOMContentLoaded", () => {
     configScript.defer = true;
     configScript.onload = () => {
         initConfig();
-        renderProfiles();
+
+        const searchInput = document.querySelector(".buscador");
+        if (searchInput && initialSearch) {
+            searchInput.value = initialSearch;
+        }
+
+        renderProfiles(initialSearch.trim());
+
+        if (searchInput) {
+            searchInput.addEventListener("input", (e) => {
+                const query = e.target.value.trim();
+                renderProfiles(query);
+            });
+            searchInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    const query = e.target.value.trim();
+                    renderProfiles(query);
+                }
+            });
+        }
+
+        const searchButton = document.querySelector(".nav-search button");
+        if (searchButton && searchInput) {
+            searchButton.addEventListener("click", () => {
+                const query = searchInput.value.trim();
+                renderProfiles(query);
+            });
+        }
     };
     document.head.appendChild(configScript);
 });

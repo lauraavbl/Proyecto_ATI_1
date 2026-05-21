@@ -139,6 +139,30 @@ window.addEventListener("DOMContentLoaded", () => {
     configScript.onload = () => {
         initConfig();
 
+        const searchInput = document.querySelector(".buscador");
+        const searchButton = document.querySelector(".nav-search button");
+
+        function performSearchRedirect() {
+            if (!searchInput) return;
+            const query = searchInput.value.trim();
+            let targetUrl = `index.html?search=${encodeURIComponent(query)}`;
+            if (lang) {
+                targetUrl += `&lang=${lang}`;
+            }
+            window.location.href = targetUrl;
+        }
+
+        if (searchButton) {
+            searchButton.addEventListener("click", performSearchRedirect);
+        }
+        if (searchInput) {
+            searchInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    performSearchRedirect();
+                }
+            });
+        }
+
         let ci = urlParams.get("ci");
         if (!ci) {
             ci = "27279497";
