@@ -1,32 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile | Laura Barreto</title>
+    <title>Perfil</title>
     <link rel="icon" sizes="192x192" href="icon/cropped-logonuevo-192x192.png">
     <link rel="stylesheet" href="./css/style.css">
+    <script type="text/javascript" src="conf/configES.json" defer></script>
+    <script src="./js/profile.js" defer></script>
 </head>
 <body>
     <header>
-        <a class="logo" href="index.html">ATI<span>[UCV]</span>Log</a>
+        <a class="logo" href="index.html">
+            <span></span>
+        </a>
 
         <nav class="nav-search">
-            <input type="text" placeholder="Nombre...">
+            <input class="buscador" type="text" placeholder="Nombre...">
             <button type="button">Buscar</button>
         </nav>
 
-        <div class="user-icon"><img src="./icon/userIcon.svg" alt="" class="icono"></div>
+        <div class="user-icon"><img src="icon/userIcon.svg" alt="" class="icono"></div>
         <div class="menu-icon">&#9776;</div>
     </header>
     <section class="main-content">
         <div class="content-img">
-            <img class="img-profile" src="" alt="lau">
+            <img class="img-profile" src="" alt="">
         </div>
         <div class="content-info">
-            <h1 class="Nombre">Laura Barreto</h1>
+            <h1 class="Nombre"></h1>
             <p class="cover-letter">
-                
             </p>
             <table class="bullets">
                 <tr>
@@ -47,19 +50,16 @@
                 </tr>
                 <tr style="font-weight: bold;">
                     <td id="lenguaje de prog"></td>
-                    <td id="lenguaje_value">t</td>
+                    <td id="lenguaje_value"></td>
                 </tr>
             </table>
             
             <p class="bullets" style="margin-top: 15px;">
-                Si necesitan comunicarse conmigo me pueden escribir a: <br>
-                <a id="correo_value" class="link-correo" href="mailto:laurabarretoloreto25@gmail.com"></a>
             </p>
         </div>
     </section>
     <footer>
-        <p>Copyright &copy; 2026 Escuela de computaci&oacute;n &middot; ATI. Todos los derechos reservados</p>
-
+        <p class="footer"></p>
     </footer>
 </body>
 </html>
