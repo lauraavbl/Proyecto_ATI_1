@@ -1,3 +1,33 @@
+
+const profileFormatter = {
+    cardClass: "student-card",
+    formatCard: function (profile, lang) {
+        console.log(`[Enlace Implícito] Formateando tarjeta para: ${profile.name} con clase: ${this.cardClass}`);
+        const card = document.createElement("a");
+        card.className = this.cardClass;
+
+        let cardHref = `profile.html?ci=${profile.ci}`;
+        if (lang) {
+            cardHref += `&lang=${lang}`;
+        }
+        card.href = cardHref;
+        return card;
+    }
+};
+
+const searchTracker = {
+    logLabel: "[Buscador ATI]",
+    track: function (inputElement) {
+        if (inputElement) {
+            inputElement.addEventListener("input", (e) => {
+                const query = e.target.value.trim();
+                console.log(`${this.logLabel} Entrada de búsqueda: "${query}"`);
+                renderProfiles(query);
+            });
+        }
+    }
+};
+
 function initConfig() {
     const logoLink = document.querySelector(".logo");
     if (logoLink && typeof config !== "undefined" && config.site) {
@@ -55,7 +85,7 @@ function renderProfiles(filterQuery = "") {
     const urlParams = new URLSearchParams(window.location.search);
     const lang = urlParams.get("lang");
 
-    const filteredProfiles = profiles.filter(profile => 
+    const filteredProfiles = profiles.filter(profile =>
         profile.name.toLowerCase().includes(filterQuery.toLowerCase())
     );
 
@@ -77,14 +107,8 @@ function renderProfiles(filterQuery = "") {
     }
 
     filteredProfiles.forEach(profile => {
-        const card = document.createElement("a");
-        card.className = "student-card";
 
-        let cardHref = `profile.html?ci=${profile.ci}`;
-        if (lang) {
-            cardHref += `&lang=${lang}`;
-        }
-        card.href = cardHref;
+        const card = profileFormatter.formatCard(profile, lang);
 
         const img = document.createElement("img");
         img.className = "img-index";
@@ -147,10 +171,8 @@ window.addEventListener("DOMContentLoaded", () => {
         renderProfiles(initialSearch.trim());
 
         if (searchInput) {
-            searchInput.addEventListener("input", (e) => {
-                const query = e.target.value.trim();
-                renderProfiles(query);
-            });
+            searchTracker.track(searchInput);
+
             searchInput.addEventListener("keydown", (e) => {
                 if (e.key === "Enter") {
                     const query = e.target.value.trim();
@@ -158,11 +180,11 @@ window.addEventListener("DOMContentLoaded", () => {
                 }
             });
         }
-
         const searchButton = document.querySelector(".nav-search button");
         if (searchButton && searchInput) {
-            searchButton.addEventListener("click", () => {
+            searchButton.addEventListener("click", function () {
                 const query = searchInput.value.trim();
+                console.log(`[DOM Event] Se presionó el botón: "${this.textContent}"`);
                 renderProfiles(query);
             });
         }
