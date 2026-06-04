@@ -127,26 +127,39 @@ section {
     border-radius: 8px;
     overflow: hidden;
     background-color: white;
-    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.12);
+    /* Optimizado FPS: se elimina transition de box-shadow (fuerza repaint en cada frame)
+       y se usa posicion: relative para el pseudo-elemento ::after */
+    position: relative;
     text-decoration: none;
     color: inherit;
     display: block;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    /* Optimizado: will-change avisa al navegador que este elemento animará transform,
-       permitiéndole promoverlo a un compositor layer antes del primer frame */
+    /* Solo transform en transition — propiedad compositable, sin repaint */
+    transition: transform 0.3s ease;
     will-change: transform;
-    /* Optimizado: CSS custom property para el color de la barra —
-       se hereda en el árbol sin necesidad de un selector descendiente */
     --bar-color: var(--main-color);
+}
+
+/* Optimizado FPS: la sombra vive en ::after y solo anima opacity —
+   opacity es 100% compositable en GPU, no dispara layout ni paint */
+.student-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    box-shadow: 6px 6px 18px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .student-card:hover {
     transform: scale(1.07) rotate(2deg);
-    box-shadow: 6px 6px 18px rgba(0, 0, 0, 0.25);
-    /* Optimizado: cambiar la custom property en el padre es más barato que
-       un selector descendiente de hover — el motor CSS resuelve la herencia
-       internamente sin recorrer todo el DOM */
     --bar-color: var(--accent-color);
+}
+
+/* Al hacer hover solo cambia opacity del ::after — cero repaint */
+.student-card:hover::after {
+    opacity: 1;
 }
 
 .img-index {
