@@ -1,7 +1,26 @@
 @import url("./_theme.css");
 
-/* Optimizado: reemplaza selector universal (*) por lista explícita de elementos */
-html, body, header, nav, section, footer, div, a, p, h1, h2, h3, ul, li, img, span, table, tr, td, button, input {
+html,
+body,
+header,
+nav,
+section,
+footer,
+div,
+a,
+p,
+h1,
+h2,
+h3,
+ul,
+li,
+img,
+span,
+table,
+tr,
+td,
+button,
+input {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -139,8 +158,6 @@ section {
     --bar-color: var(--main-color);
 }
 
-/* Optimizado FPS: la sombra vive en ::after y solo anima opacity —
-   opacity es 100% compositable en GPU, no dispara layout ni paint */
 .student-card::after {
     content: '';
     position: absolute;
@@ -157,7 +174,6 @@ section {
     --bar-color: var(--accent-color);
 }
 
-/* Al hacer hover solo cambia opacity del ::after — cero repaint */
 .student-card:hover::after {
     opacity: 1;
 }
@@ -169,7 +185,6 @@ section {
     display: block;
     background-color: #37474F;
     transition: transform 0.3s ease;
-    /* Optimizado: will-change para transform evita recálculo en cada frame */
     will-change: transform;
 }
 
@@ -181,7 +196,6 @@ section {
     padding: 8px 10px 4px;
 }
 
-/* Optimizado: clase directa en lugar de selector descendiente de tipo (.card-info p) */
 .card-info-text {
     font-size: 14px;
     color: #222;
@@ -191,19 +205,11 @@ section {
 
 .card-bar {
     height: 5px;
-    /* Optimizado: usa la custom property --bar-color heredada del padre (.student-card)
-       en lugar del selector descendiente de hover — selector directo de clase,
-       costo mínimo de resolución */
     background-color: var(--bar-color);
     border-radius: 0 0 6px 6px;
     transition: background-color 0.3s ease;
-    /* Optimizado: will-change notifica al navegador que background-color cambiará,
-       activando optimizaciones de pintura en el compositor (lab 5) */
     will-change: background-color;
 }
-
-/* Eliminado: .student-card:hover .card-bar ya no es necesario —
-   el cambio de color se maneja via herencia de --bar-color */
 
 footer {
     padding: 16px;
@@ -265,7 +271,6 @@ td {
     padding-top: 5px;
 }
 
-/* Optimizado: clases directas en lugar de pseudo-selectores estructurales sobre elementos td */
 .td-highlight {
     font-weight: bold;
 }
@@ -282,26 +287,49 @@ td {
 .link-correo {
     font-weight: bold;
 }
-.icono{
-    width:30px;
+
+.icono {
+    width: 30px;
 }
+
 .menu-icon {
     display: none;
     font-size: 28px;
     color: white;
     cursor: pointer;
 }
+
 @media (max-width: 480px) {
-    .nav-search { display: none; }
-    .profile-link { display: none; }
-    .menu-icon { display: block; }
-    .main-content { flex-direction: column; }
-    .img { width: 100%; max-width: 100%; }
-    .student-grid { grid-template-columns: repeat(2, 1fr); }
+    .nav-search {
+        display: none;
+    }
+
+    .profile-link {
+        display: none;
+    }
+
+    .menu-icon {
+        display: block;
+    }
+
+    .main-content {
+        flex-direction: column;
+    }
+
+    .img {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .student-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .content-img {
         width: 100%;
         padding-right: 0;
     }
+
     .img-profile {
         width: 100%;
         max-width: 100%;
@@ -311,16 +339,36 @@ td {
 
 /* Tablets: 481px - 768px */
 @media (min-width: 481px) and (max-width: 768px) {
-    .nav-search { display: none; }
-    .profile-link { display: none; }
-    .menu-icon { display: block; }
-    .main-content { flex-direction: column; }
-    .img { width: 100%; max-width: 100%; }
-    .student-grid { grid-template-columns: repeat(2, 1fr); }
+    .nav-search {
+        display: none;
+    }
+
+    .profile-link {
+        display: none;
+    }
+
+    .menu-icon {
+        display: block;
+    }
+
+    .main-content {
+        flex-direction: column;
+    }
+
+    .img {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .student-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .content-img {
         width: 100%;
         padding-right: 0;
     }
+
     .img-profile {
         width: 100%;
         max-width: 100%;
@@ -328,7 +376,7 @@ td {
     }
 }
 
-/* Mobile responsive expanded header menu */
+
 @media (max-width: 768px) {
     header {
         transition: padding 0.3s ease, gap 0.3s ease;
@@ -357,7 +405,6 @@ td {
         padding-bottom: 12px;
     }
 
-    /* Optimizado: clase directa en lugar de selector de atributo descendiente profundo */
     .menu-open .nav-search-input {
         flex: 1;
         width: auto;
@@ -377,12 +424,22 @@ td {
 
 /* Laptops: 769px - 1024px */
 @media (min-width: 769px) and (max-width: 1024px) {
-    .menu-icon { display: none; }
-    .student-grid { grid-template-columns: repeat(3, 1fr); }
+    .menu-icon {
+        display: none;
+    }
+
+    .student-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 /* Desktop: 1025px - 1200px */
 @media (min-width: 1025px) and (max-width: 1200px) {
-    .menu-icon { display: none; }
-    .student-grid { grid-template-columns: repeat(3, 220px); }
+    .menu-icon {
+        display: none;
+    }
+
+    .student-grid {
+        grid-template-columns: repeat(3, 220px);
+    }
 }

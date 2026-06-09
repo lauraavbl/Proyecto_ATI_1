@@ -1,6 +1,5 @@
 
-/* Optimizado FPS: debounce evita que renderProfiles se llame en cada tecla
-   y destruya/reconstruya todo el DOM con cada pulsación */
+
 function debounce(fn, delay) {
     let timer;
     return function (...args) {
@@ -29,8 +28,7 @@ const searchTracker = {
     logLabel: "[Buscador ATI]",
     track: function (inputElement) {
         if (inputElement) {
-            /* Optimizado FPS: debounce de 220ms — el DOM solo se reconstruye
-               cuando el usuario deja de escribir, no en cada keystroke */
+
             const debouncedRender = debounce((query) => renderProfiles(query), 220);
             inputElement.addEventListener("input", (e) => {
                 const query = e.target.value.trim();
@@ -112,8 +110,6 @@ function renderProfiles(filterQuery = "") {
         return;
     }
 
-    /* Optimizado FPS: DocumentFragment acumula todos los nodos en memoria
-       y hace un único appendChild al DOM — elimina un reflow por cada tarjeta */
     const fragment = document.createDocumentFragment();
 
     filteredProfiles.forEach(profile => {
@@ -124,8 +120,6 @@ function renderProfiles(filterQuery = "") {
         img.className = "img-index";
         img.src = `${profile.ci}/${profile.ci}Small${profile.image_ext}`;
         img.alt = profile.name;
-        /* Optimizado FPS: lazy loading evita descargar y decodificar todas
-           las imágenes al mismo tiempo — reduce uso de red y CPU en el render inicial */
         img.loading = "lazy";
         img.decoding = "async";
 
@@ -157,7 +151,6 @@ function renderProfiles(filterQuery = "") {
         fragment.appendChild(card);
     });
 
-    /* Un solo reflow: se insertan todas las tarjetas de una vez */
     grid.appendChild(fragment);
 }
 
