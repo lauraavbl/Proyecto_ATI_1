@@ -1,4 +1,13 @@
 
+
+function debounce(fn, delay) {
+    let timer;
+    return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn.apply(this, args), delay);
+    };
+}
+
 const profileFormatter = {
     cardClass: "student-card",
     formatCard: function (profile, lang) {
@@ -19,10 +28,12 @@ const searchTracker = {
     logLabel: "[Buscador ATI]",
     track: function (inputElement) {
         if (inputElement) {
+
+            const debouncedRender = debounce((query) => renderProfiles(query), 220);
             inputElement.addEventListener("input", (e) => {
                 const query = e.target.value.trim();
                 console.log(`${this.logLabel} Entrada de búsqueda: "${query}"`);
-                renderProfiles(query);
+                debouncedRender(query);
             });
         }
     }
@@ -92,19 +103,14 @@ function renderProfiles(filterQuery = "") {
     if (filteredProfiles.length === 0) {
         const noResultsDiv = document.createElement("div");
         noResultsDiv.className = "no-results";
-        noResultsDiv.style.gridColumn = "1 / -1";
-        noResultsDiv.style.textAlign = "center";
-        noResultsDiv.style.color = "#1c4975";
-        noResultsDiv.style.fontFamily = "var(--flex-font)";
-        noResultsDiv.style.fontSize = "16px";
-        noResultsDiv.style.fontWeight = "normal";
-        noResultsDiv.style.marginTop = "30px";
-
+        noResultsDiv.style.cssText = "grid-column:1/-1;text-align:center;color:#1c4975;font-family:var(--flex-font);font-size:16px;font-weight:normal;margin-top:30px";
         const msg = config.noResults ? config.noResults.replace("[query]", `<strong>${filterQuery}</strong>`) : `No hay perfiles que tengan en su nombre: <strong>${filterQuery}</strong>`;
         noResultsDiv.innerHTML = msg;
         grid.appendChild(noResultsDiv);
         return;
     }
+
+    const fragment = document.createDocumentFragment();
 
     filteredProfiles.forEach(profile => {
 
@@ -114,11 +120,14 @@ function renderProfiles(filterQuery = "") {
         img.className = "img-index";
         img.src = `${profile.ci}/${profile.ci}Small${profile.image_ext}`;
         img.alt = profile.name;
+        img.loading = "lazy";
+        img.decoding = "async";
 
         const info = document.createElement("div");
         info.className = "card-info";
 
         const p = document.createElement("p");
+        p.className = "card-info-text";
         p.textContent = profile.name;
 
         info.appendChild(p);
@@ -139,8 +148,10 @@ function renderProfiles(filterQuery = "") {
             window.location.href = targetUrl;
         });
 
-        grid.appendChild(card);
+        fragment.appendChild(card);
     });
+
+    grid.appendChild(fragment);
 }
 
 window.addEventListener("DOMContentLoaded", () => {
